@@ -20,11 +20,11 @@ import com.othon.carvalho.repository.auth.Repositoryoo;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/java")
 @CrossOrigin("*")
 public class PerguntasRespostasController {
 	@Autowired
@@ -52,8 +52,20 @@ public class PerguntasRespostasController {
     //     "senha": "1541sadad",
     //     "dt_versao": "2023-03-02",
     //     "vesao": 1
-        
+    
     //   }
+    @GetMapping("/versaoget/{versao}")
+	public ResponseEntity<?> versao(@PathVariable String versao) {
+		List<com.othon.carvalho.model.auth.Produto> list = login.versao(versao);
+		return new ResponseEntity<>(list, HttpStatus.valueOf(202));
+
+	}
+    @GetMapping("/numeroVersao/{versao}")
+	public ResponseEntity<?> numeroVersao(@PathVariable String versao) {
+		Optional<com.othon.carvalho.model.auth.Produto> list = login.ver(versao);
+		return new ResponseEntity<>(list, HttpStatus.valueOf(202));
+
+	}
     @GetMapping("/login/{usuario}/{senha}")
 	public ResponseEntity<?> Login(@PathVariable String usuario,@PathVariable String senha) {
 		Optional<com.othon.carvalho.model.auth.Produto> list = login.Login(usuario, senha);
@@ -66,6 +78,31 @@ public class PerguntasRespostasController {
 		return new ResponseEntity<>(list, HttpStatus.valueOf(202));
 
 	}
+    @PutMapping("/validarCadastro/{versao}/{id}")
+    public void validarVersao(@PathVariable String versao, @PathVariable String id) {
+        login.validarVersao(versao, id);
+    }
+    @PutMapping("/validarData/{data}/{id}")
+    public void data(@PathVariable String data, @PathVariable String id) {
+        login.data(data, id);
+    }
+//JSON
+    @PostMapping("/Cadastro")
+public void Cadastro(@RequestBody Map<String, String> params) {
+    String senha = params.get("senha");
+    String status = params.get("status");
+    String usuario = params.get("usuario");
+    
+    login.post(senha, status, usuario);
+}
+//Form
+//     @PostMapping("/Cadastro")
+//     public void Cadastro(@RequestParam String senha, @RequestParam String status, @RequestParam String usuario) {
+//     login.post(senha, status, usuario);
+// }
+
+// curl -X POST -d "senha=123456&status=activo&usuario=juan" http://localhost:8080/Cadastro
+// curl -X POST -H "Content-Type: application/json" -d '{"senha": "123456", "status": "activo", "usuario": "juan"}' http://localhost:8080/Cadastro
 
 	@PostMapping("/usuario")
     public ProdutoFormRequest salvarr (@RequestBody ProdutoFormRequest loginss){

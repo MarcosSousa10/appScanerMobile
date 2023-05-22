@@ -63,15 +63,27 @@ public class PerguntasRespostasController {
     @GetMapping("/numeroVersao/{versao}")
 	public ResponseEntity<?> numeroVersao(@PathVariable String versao) {
 		Optional<com.othon.carvalho.model.auth.Produto> list = login.ver(versao);
-		return new ResponseEntity<>(list, HttpStatus.valueOf(202));
-
+        if (list.isPresent()) {
+            com.othon.carvalho.model.auth.Produto produto = list.get();
+            return new ResponseEntity<>(produto, HttpStatus.valueOf(202));
+        } else {
+            String mensagem = "1";
+            return ResponseEntity.ok(mensagem);
+        }
 	}
+
     @GetMapping("/login/{usuario}/{senha}")
-	public ResponseEntity<?> Login(@PathVariable String usuario,@PathVariable String senha) {
-		Optional<com.othon.carvalho.model.auth.Produto> list = login.Login(usuario, senha);
-		return new ResponseEntity<>(list, HttpStatus.valueOf(202));
-
-	}
+    public ResponseEntity<?> Login(@PathVariable String usuario, @PathVariable String senha) {
+    Optional<com.othon.carvalho.model.auth.Produto> optionalProduto = login.Login(usuario, senha);
+    
+    if (optionalProduto.isPresent()) {
+        com.othon.carvalho.model.auth.Produto produto = optionalProduto.get();
+        return new ResponseEntity<>(produto, HttpStatus.valueOf(202));
+    } else {
+        String mensagem = "Usuario não encontrado.";
+        return ResponseEntity.ok(mensagem);
+    }
+}
     @GetMapping("/validarCadastro/{usuario}")
 	public ResponseEntity<?> Login(@PathVariable String usuario) {
 		Optional<com.othon.carvalho.model.auth.Produto> list = login.consultarUsuarioJaCadastrado(usuario);

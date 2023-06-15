@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.othon.carvalho.model.app.Produto;
+import com.othon.carvalho.repository.app.ReposiroryNovo;
 import com.othon.carvalho.repository.app.Repositoryo;
+import com.othon.carvalho.model.app.Produto;
+import com.othon.carvalho.model.app.ProdutoNovo;
+import com.othon.carvalho.model.auth.ProdutoNovos;
+
 import com.othon.carvalho.repository.auth.Repositoryoo;
 
 import java.util.Collection;
@@ -31,6 +35,8 @@ public class PerguntasRespostasController {
 	private Repositoryo consulta;
 	@Autowired
 	private Repositoryoo login;
+    @Autowired
+	private ReposiroryNovo Novo;
 
 	@GetMapping("/codigo/{codigo}")
 	public ResponseEntity<?> findCode(@PathVariable String codigo) {
@@ -45,15 +51,8 @@ public class PerguntasRespostasController {
 		return new ResponseEntity<>(list, HttpStatus.valueOf(202));
 
 	}
-    // {
-  
-    //     "usuario": "marcos",
-    //     "status": "true",
-    //     "senha": "1541sadad",
-    //     "dt_versao": "2023-03-02",
-    //     "vesao": 1
+
     
-    //   }
     @GetMapping("/versaoget/{versao}")
 	public ResponseEntity<?> versao(@PathVariable String versao) {
 		List<com.othon.carvalho.model.auth.Produto> list = login.versao(versao);
@@ -107,6 +106,7 @@ public void Cadastro(@RequestBody Map<String, String> params) {
     
     login.post(senha, status, usuario);
 }
+
 //Form
 //     @PostMapping("/Cadastro")
 //     public void Cadastro(@RequestParam String senha, @RequestParam String status, @RequestParam String usuario) {
@@ -126,6 +126,31 @@ public void Cadastro(@RequestBody Map<String, String> params) {
     @GetMapping("/tudo")
     public Iterable<com.othon.carvalho.model.auth.Produto> obterProduto(){
         return login.findAll();
+    }
+    @GetMapping("/tudoNovo")
+    public List<ProdutoNovo> obterProdutosNovos(){
+        return Novo.fins();
+    }
+   
+    @PutMapping("/statusNovo/{status}/{descricao}")
+    public void statusNovo(@PathVariable String status, @PathVariable String descricao) {
+        Novo.status(status, descricao);
+    }
+    @DeleteMapping("/drop")
+    public void data() {
+        Novo.drop();
+    }
+    @GetMapping("/create")
+    public void create() {
+        Novo.create();
+    }
+    @GetMapping("/select")
+    public void select() {
+    }
+    @GetMapping("/selects")
+    public List<ProdutoNovo> selects(){
+        return Novo.select();
+
     }
     @GetMapping("/id/{id}")
     public ResponseEntity<ProdutoFormRequest> GetById(@PathVariable Long id){

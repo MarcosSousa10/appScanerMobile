@@ -7,17 +7,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "produtosnovos")
-public class ProdutoNovo {
+@Table(name = "produtonovo")
+public class ProdutoNovoss {
     @Id
     private Integer codprod;
-
     private String descricao;
     private Integer quantidade;
     private Integer codfornec;
-
     private String codbarra;
     private String status;
+    private String unidade;
+
 
     public String getStatus() {
         return status;
@@ -47,6 +47,14 @@ public class ProdutoNovo {
         return this.codbarra;
     }
 
+    public String getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
+    }
+
     public void setCodbarra(String codbarra) {
         this.codbarra = codbarra;
     }
@@ -67,23 +75,31 @@ public class ProdutoNovo {
         this.quantidade = quantidade;
     }
 
+
+
     @Override
     public String toString() {
-        return "ProdutoNovo [codfornec=" + codfornec + ", descricao=" + descricao + ", quantidade=" + quantidade
-                + ", codprod=" + codprod + ", codbarra=" + codbarra + ", status=" + status + "]";
+        return "ProdutoNovoss [codprod=" + codprod + ", descricao=" + descricao + ", quantidade=" + quantidade
+                + ", codfornec=" + codfornec + ", codbarra=" + codbarra + ", status=" + status + ", unidade=" + unidade
+                + "]";
     }
 
-    public ProdutoNovo(Integer codfornec, String descricao, Integer quantidade, Integer codprod, String codbarra,
-            String status) {
-        this.codfornec = codfornec;
+    public ProdutoNovoss(Integer codprod, String descricao, Integer quantidade, Integer codfornec, String codbarra,
+            String status, String unidade) {
+        this.codprod = codprod;
         this.descricao = descricao;
         this.quantidade = quantidade;
-        this.codprod = codprod;
+        this.codfornec = codfornec;
         this.codbarra = codbarra;
         this.status = status;
+        this.unidade = unidade;
     }
 
-    public ProdutoNovo() {
+    public ProdutoNovoss() {
     }
+
+    
+
+
 
 }

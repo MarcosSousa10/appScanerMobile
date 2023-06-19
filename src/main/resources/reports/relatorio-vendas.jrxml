@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71c48e8b-15e9-4884-ab6c-af93ef8b90e2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Winthor"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="647"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="353"/>
+	<queryString>
+		<![CDATA[select * from "PRODUTONOVO"]]>
+	</queryString>
+	<field name="CODPROD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="CODPROD"/>
+		<property name="com.jaspersoft.studio.field.label" value="CODPROD"/>
+	</field>
+	<field name="DESCRICAO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DESCRICAO"/>
+		<property name="com.jaspersoft.studio.field.label" value="DESCRICAO"/>
+	</field>
+	<field name="QUANTIDADE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="QUANTIDADE"/>
+		<property name="com.jaspersoft.studio.field.label" value="QUANTIDADE"/>
+	</field>
+	<field name="CODFORNEC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="CODFORNEC"/>
+		<property name="com.jaspersoft.studio.field.label" value="CODFORNEC"/>
+	</field>
+	<field name="CODBARRA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CODBARRA"/>
+		<property name="com.jaspersoft.studio.field.label" value="CODBARRA"/>
+	</field>
+	<field name="STATUS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="STATUS"/>
+		<property name="com.jaspersoft.studio.field.label" value="STATUS"/>
+	</field>
+	<field name="UNIDADE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="UNIDADE"/>
+		<property name="com.jaspersoft.studio.field.label" value="UNIDADE"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="90" y="0" width="390" height="50" uuid="4d674914-1b23-40bd-9261-f4a3724268ee"/>
+				<textElement>
+					<font fontName="DejaVu Serif Condensed" size="19"/>
+				</textElement>
+				<text><![CDATA[Relatorio de Conferencia de Mercadorias]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="300" height="30" uuid="d3e8ecdb-8566-4276-a39f-7443b5fd7ae8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Descricao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="100" height="30" uuid="94e49567-5cfb-4fc3-8ac8-ce528c1ac5e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="80" height="30" uuid="6810a3ef-2876-4f0e-839e-5e06b4eb4f1b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-20" y="0" width="100" height="30" uuid="4c144e48-76cf-4b7c-925c-7b08ded8b315"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="300" height="30" uuid="97ce7d0c-5dcb-4aed-b856-d511a8f9155c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DESCRICAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="30" uuid="d4661010-c315-490d-a86f-c81127422e53"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{QUANTIDADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="80" height="30" uuid="cf0cf2db-b342-480e-a835-02d2392b3db1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{STATUS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-20" y="0" width="100" height="30" uuid="a9fa5cb2-7138-4afa-9a7e-e11acda05396"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CODPROD}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,6 +1,7 @@
 package com.othon.carvalho.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,6 +23,8 @@ import com.othon.carvalho.repository.app.Repositoryo;
 import com.othon.carvalho.model.app.Produto;
 import com.othon.carvalho.model.app.ProdutoNovoss;
 import com.othon.carvalho.repository.auth.Repositoryoo;
+import com.othon.carvalho.service.RelatorioVendasService;
+import com.othon.carvalho.util.DateUtils;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -48,7 +51,34 @@ public class PerguntasRespostasController {
     private Repositoryoo login;
     @Autowired
     private ReposiroryNovo Novo;
-
+	@Autowired
+	private RelatorioVendasService relatorioVendasService;
+    	@GetMapping("/relatorio-vendas")
+	public ResponseEntity<byte[]> relatorioVendas(
+			@RequestParam(value = "id", required = false, defaultValue = "") Long id,
+			@RequestParam(value = "inicio", required= false, defaultValue = "") String inicio,
+			@RequestParam(value = "fim", required= false, defaultValue = "") String fim
+	){
+		Date dataInicio = DateUtils.fromString(inicio);
+		Date dataFim = DateUtils.fromString(fim, true);
+		
+		if(dataInicio == null) {
+			dataInicio = DateUtils.DATA_INICIO_PADRAO;
+		}
+		
+		if(dataFim == null) {
+			dataFim = DateUtils.hoje(true);
+		}
+		
+		var relatorioGerado = relatorioVendasService.gerarRelatorio(id, dataInicio, dataFim);
+		var headers = new HttpHeaders();
+		var fileName = "relatorio-vendas.pdf";
+		headers.setContentDispositionFormData("inline; filename=\"" +fileName+ "\"", fileName);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		var responseEntity = new ResponseEntity<>(relatorioGerado, headers, HttpStatus.OK);
+        
+		return responseEntity ;
+	}
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<?> findCode(@PathVariable String codigo) {
         Optional<Produto> list = consulta.findAll(codigo);

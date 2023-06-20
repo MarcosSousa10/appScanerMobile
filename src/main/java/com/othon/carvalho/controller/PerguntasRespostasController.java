@@ -34,6 +34,7 @@ import jakarta.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -325,15 +326,44 @@ public String insertData() {
 
     return "Produtos Inseridos!";
 }
-@GetMapping("/tudoNovo")
-    public List<ProdutoNovoss> obterProdutosNovos() {
-        return Novo.fins();
+ @GetMapping("/tudoNovo")
+     public List<ProdutoNovoss> obterProdutosNovos() {
+       return Novo.fins();
+     }
+// @GetMapping("/tudoNovo")
+// public Object obterProdutosNovos() {
+//     List<ProdutoNovoss> produtosNovos = Novo.fins();
+    
+//     if (produtosNovos.isEmpty()) {
+//         return "Nao Existem Dados a Serem Carregados ou Nao Foram Encontrados.";
+//     } else {
+//         return produtosNovos;
+//     }
+// }
+ @GetMapping("/codbarra/{codbarra}")
+     public ResponseEntity<Object> ValidarCodbarra( @PathVariable String codbarra) {
+       Novo.ValidarCodBarra(codbarra);
+           Integer a = Novo.ValidarCodBarra(codbarra);
+    
+    if (a > 0) {
+        return ResponseEntity.ok(a);
+    } else {
+        String errorMessage = "Produto Não Encontrado";
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
+     }
 
-    @PutMapping("/statusNovo/{status}/{descricao}")
-    public void statusNovo(@PathVariable String status, @PathVariable String descricao) {
-        Novo.status(status, descricao);
+@PutMapping("/statusNovo/{status}/{descricao}")
+public ResponseEntity<Object> statusNovo(@PathVariable String status, @PathVariable String descricao) {
+    Object a = Novo.status(status, descricao);
+    
+    if (a == "0") {
+        return ResponseEntity.ok(a);
+    } else {
+        String errorMessage = "Produto Não Encontrado";
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
     }
+}
 
     @DeleteMapping("/drop")
     public void data() {

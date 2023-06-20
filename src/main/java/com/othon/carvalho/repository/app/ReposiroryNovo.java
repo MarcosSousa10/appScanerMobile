@@ -33,11 +33,12 @@ public interface ReposiroryNovo extends CrudRepository<ProdutoNovoss, Long> {
 
     @Query(value = "select * from produtonovo", nativeQuery = true)
     List<ProdutoNovoss> fins();
-
+    @Query(value = "select count(rownum)  from produtonovo where codbarra = ?1", nativeQuery = true)
+    Integer ValidarCodBarra(String descricao);
     @Transactional
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query(value = "UPDATE othon.produtonovo SET status = ?1 WHERE codbarra = ?2", nativeQuery = true)
-    void status(String status, String descricao);
+    Object status(String status, String descricao);
 
     @Modifying
     @Query(value = "INSERT INTO othon.produtonovo (CODFORNEC, codprod, descricao, unidade, codbarra, QUANTIDADE) SELECT T.CODFORNEC,  T.codprod, T.descricao, T.unidade, T.codauxiliar AS codbarra, SUM(V.QT) AS QUANTIDADE FROM othon.pcprodut T, othon.pcmov V, othon.PCFORNEC F WHERE V.DTCANCEL IS NULL AND F.CODFORNEC = T.CODFORNEC AND v.codprod = t.codprod AND v.codoper = 'E' AND V.DTMOV = TO_DATE(CURRENT_DATE, 'DD-MM-YYYY')-1 AND V.CODFILIAL = 1 AND T.CODEPTO < 500 GROUP BY T.CODFORNEC, T.codprod, T.descricao, T.unidade, T.codauxiliar", nativeQuery = true)

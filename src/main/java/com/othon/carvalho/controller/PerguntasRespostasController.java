@@ -236,11 +236,11 @@ private JdbcTemplate jdbcTemplate;
     @GetMapping("/tu")
     public String createData() {
         
-        LocalDate localDate = LocalDate.now();
+         LocalDate localDate = LocalDate.now();
 
-        java.sql.Date date = java.sql.Date.valueOf(localDate);
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String data = format.format(date);
+         java.sql.Date date = java.sql.Date.valueOf(localDate);
+         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+         String data = format.format(date);
 
     String sqls = "SELECT T.CODFORNEC, T.codprod, T.descricao, T.unidade, T.codauxiliar AS codbarra, '     ' AS status, SUM(V.QT) AS QUANTIDADE " +
                  "FROM othon.pcprodut T, othon.pcmov V, othon.PCFORNEC F " +
@@ -296,12 +296,9 @@ private String getSQLType(Class<?> javaType) {
 }
 
 
-@GetMapping("/in")
-public String insertData() {
-    LocalDate localDate = LocalDate.now();
-    java.sql.Date date = java.sql.Date.valueOf(localDate);
-    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-    String data = format.format(date);
+@GetMapping("/in/{data}")
+public String insertData(@PathVariable String data) {
+
 
     String selectSql = "SELECT T.CODFORNEC, T.codprod, T.descricao, T.unidade, T.codauxiliar AS codbarra, '     ' AS status, SUM(V.QT) AS QUANTIDADE " +
              "FROM othon.pcprodut T, othon.pcmov V, othon.PCFORNEC F " +
@@ -309,7 +306,7 @@ public String insertData() {
              "AND F.CODFORNEC = T.CODFORNEC " +
              "AND V.codprod = T.codprod " +
              "AND V.codoper = 'E' " +
-             "AND v.dtmov = TO_DATE(?,'DD/MM/YYYY') - 1 " +
+             "AND v.dtmov = TO_DATE(?,'DD/MM/YYYY') " +
              "AND V.CODFILIAL = 1 " +
              "AND T.CODEPTO < 500 " +
              "GROUP BY T.CODFORNEC, T.codprod, T.descricao, T.unidade, T.codauxiliar";

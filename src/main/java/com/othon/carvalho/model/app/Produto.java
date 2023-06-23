@@ -18,7 +18,7 @@ public class Produto{
   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    private Long codprod;
+    private Integer codprod;
     private String descricao;
     private String unidade;
     private Long codauxiliar;
@@ -35,7 +35,7 @@ public class Produto{
     private Integer qtachegar;
     private Integer giromes;
     private Integer qtvendida3meses;
-
+    private String dtultent;
     
   
 }
